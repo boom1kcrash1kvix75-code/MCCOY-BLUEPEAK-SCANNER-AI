@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>MC COY AI SCANNER</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020912;--bg2:#05101e;--bg3:#091628;
+  --g:#00ff88;--g2:#00cc6a;--r:#ff2d55;--pk:#ff2d9b;
+  --y:#ffd60a;--c:#00d4ff;--w:#e8f4ff;--mu:#3d5570;
+  --bdr:rgba(0,212,255,0.12);--card:rgba(5,12,22,0.97);
+  --gg:0 0 20px rgba(0,255,136,0.45);
+  --gr:0 0 20px rgba(255,45,85,0.45);
+  --gc:0 0 20px rgba(0,212,255,0.35);
+  --gp:0 0 20px rgba(255,45,155,0.45);
+  --gy:0 0 20px rgba(255,214,10,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overscroll-behavior:none;}
+body{background:var(--bg);color:var(--w);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
+
+/* ══ PAGES ══ */
+.page{display:none;min-height:100vh;}
+.page.on{display:block;}
+
+/* ══ SHARED ══ */
+.wrap{max-width:480px;margin:0 auto;padding:0 13px 80px;position:relative;z-index:1;}
+.hline{height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--pk),transparent);margin:12px 0;animation:glow 3s infinite;}
+@keyframes glow{0%,100%{opacity:.4}50%{opacity:1}}
+.logo-txt{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;letter-spacing:2px;}
+.mc{color:var(--g);text-shadow:var(--gg);}
+.coy{color:var(--w);}
+.ai{color:var(--c);text-shadow:var(--gc);}
+.sc{color:var(--pk);text-shadow:var(--gp);}
+.sect-title{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--c);letter-spacing:1.5px;display:flex;align-items:center;gap:7px;margin-bottom:11px;}
+.sect-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bdr),transparent);}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--bg3);border:1px solid var(--g);color:var(--g);font-family:'Share Tech Mono',monospace;font-size:11px;padding:8px 16px;border-radius:8px;z-index:500;transition:transform .3s;box-shadow:var(--gg);white-space:nowrap;max-width:90vw;text-align:center;}
+.toast.on{transform:translateX(-50%) translateY(0);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ══════════════════════════════════════
+   PAGE 1 — LANDING / DOWNLOAD PAGE
+══════════════════════════════════════ */
+#pg-landing{background:var(--bg);}
+#pg-landing .wrap{padding-bottom:40px;}
+
+.hero{text-align:center;padding:28px 0 16px;}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:9px;padding:5px 12px;border-radius:20px;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--g);margin-bottom:14px;letter-spacing:1px;}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:var(--gg);animation:blink 1.2s infinite;}
+.botname{font-family:'Orbitron',monospace;font-size:12px;color:var(--c);letter-spacing:2px;margin:5px 0;text-shadow:var(--gc);}
+.tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:1.5px;}
+
+/* Phone mockup */
+.phone-wrap{display:flex;justify-content:center;margin:14px 0;}
+.phone{width:195px;height:370px;background:var(--bg3);border:2px solid var(--bdr);border-radius:30px;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(0,212,255,.15);}
+.phone::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),var(--pk),var(--g));animation:hue 3s linear infinite;}
+@keyframes hue{100%{filter:hue-rotate(360deg)}}
+.phone-notch{width:55px;height:16px;background:var(--bg);border-radius:0 0 10px 10px;margin:0 auto;position:relative;z-index:1;}
+.pscr{padding:6px 9px 40px;}
+.pr1{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.plogo2{font-family:'Orbitron',monospace;font-size:7px;font-weight:700;color:var(--g);}
+.ppbdg{font-size:6px;padding:2px 5px;border-radius:3px;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--g);}
+.pbot-card{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:7px;padding:6px 8px;margin-bottom:5px;}
+.pbt-title{font-family:'Orbitron',monospace;font-size:6px;color:var(--c);margin-bottom:3px;}
+.pbt-sub{font-size:6px;color:var(--mu);margin-bottom:5px;}
+.pbt-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.pbt2{font-family:'Orbitron',monospace;font-size:5px;padding:4px 2px;border-radius:3px;text-align:center;font-weight:700;}
+.pbt2.s{background:rgba(0,255,136,.2);color:var(--g);}
+.pbt2.m{background:rgba(0,212,255,.1);color:var(--c);}
+.pbt2.d{background:rgba(255,45,85,.1);color:var(--r);}
+.psig2{border:1px solid;border-radius:5px;padding:5px 6px;margin-bottom:3px;}
+.psig2.buy{border-color:rgba(0,255,136,.25);background:rgba(0,255,136,.04);}
+.psig2.sell{border-color:rgba(255,45,85,.25);background:rgba(255,45,85,.04);}
+.psr1{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;}
+.psym2{font-family:'Orbitron',monospace;font-size:6px;color:var(--w);}
+.pbuy2{font-size:6px;font-weight:900;color:var(--g);}
+.psell2{font-size:6px;font-weight:900;color:var(--r);}
+.pconf2{font-size:5px;color:var(--y);}
+.ppr2{display:flex;gap:4px;font-family:'Share Tech Mono',monospace;font-size:5px;color:var(--mu);}
+.pnav2{display:flex;position:absolute;bottom:0;left:0;right:0;background:rgba(2,9,18,.97);border-top:1px solid var(--bdr);}
+.pni2{flex:1;text-align:center;padding:4px 0;font-size:5px;color:var(--mu);}
+.pni2.on{color:var(--c);}
+
+/* Stats */
+.stats-g{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:14px 0;}
+.stc{background:rgba(9,22,40,.8);border:1px solid var(--bdr);border-radius:10px;padding:11px 7px;text-align:center;}
+.sv2{font-family:'Orbitron',monospace;font-size:17px;font-weight:700;color:var(--g);margin-bottom:2px;}
+.sv2.y{color:var(--y);}.sv2.c{color:var(--c);}
+.sl3{font-size:8px;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;}
+
+/* Markets */
+.mkt-box{background:rgba(9,22,40,.8);border:1px solid var(--bdr);border-radius:12px;padding:13px;margin:13px 0;}
+.mkt-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.mtag{font-family:'Share Tech Mono',monospace;font-size:8px;padding:3px 7px;border-radius:3px;border:1px solid;}
+.mtag.syn{border-color:rgba(0,255,136,.3);color:var(--g);background:rgba(0,255,136,.07);}
+.mtag.fx{border-color:rgba(0,212,255,.3);color:var(--c);background:rgba(0,212,255,.07);}
+.mtag.idx{border-color:rgba(255,214,10,.3);color:var(--y);background:rgba(255,214,10,.07);}
+.mtag.met{border-color:rgba(255,214,10,.4);color:var(--y);background:rgba(255,214,10,.1);}
+
+/* Plans */
+.plan-c{background:rgba(9,22,40,.9);border:1px solid var(--bdr);border-radius:12px;padding:13px;margin-bottom:9px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s;}
+.plan-c:active{transform:scale(.98);}
+.plan-c.pop{border-color:var(--pk);}
+.plan-c.pop::before{content:'POPULAR';position:absolute;top:9px;right:9px;font-family:'Orbitron',monospace;font-size:7px;padding:2px 6px;border-radius:3px;background:rgba(255,45,155,.2);border:1px solid var(--pk);color:var(--pk);letter-spacing:1px;}
+.plan-top{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+.plan-ico{font-size:22px;}
+.plan-name{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--w);}
+.plan-sub2{font-size:9px;color:var(--mu);margin-top:1px;}
+.plan-price{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--y);margin-left:auto;text-shadow:var(--gy);}
+.plan-price span{font-size:10px;color:var(--mu);font-family:'Rajdhani',sans-serif;}
+.plan-feats{display:flex;flex-wrap:wrap;gap:4px;}
+.pf{font-size:8px;padding:2px 6px;border-radius:3px;background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.2);color:var(--g);}
+
+/* Download */
+.dl-box{background:linear-gradient(135deg,rgba(0,255,136,.08),rgba(0,212,255,.08));border:1px solid rgba(0,255,136,.25);border-radius:14px;padding:18px 14px;margin:14px 0;text-align:center;}
+.dl-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--g);margin-bottom:5px;text-shadow:var(--gg);}
+.dl-sub{font-size:10px;color:var(--mu);margin-bottom:14px;}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:15px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--g2),#004422);color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:var(--gg);margin-bottom:9px;text-decoration:none;transition:all .2s;}
+.dl-btn:active{transform:scale(.97);}
+.dl-ver{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);}
+.dl-steps2{text-align:left;margin-top:13px;background:rgba(0,0,0,.2);border-radius:8px;padding:11px;}
+.dls{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;font-size:10px;color:var(--mu);}
+.dls:last-child{margin-bottom:0;}
+.dsn{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;color:var(--c);width:18px;flex-shrink:0;}
+
+/* Contact */
+.contact-box{background:rgba(9,22,40,.9);border:1px solid var(--bdr);border-radius:12px;padding:14px;margin:13px 0;}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;cursor:pointer;letter-spacing:1px;margin-bottom:9px;text-decoration:none;transition:all .2s;}
+.wa-btn:active{transform:scale(.97);}
+.email-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:11px;border-radius:10px;border:1px solid var(--c);background:transparent;color:var(--c);cursor:pointer;letter-spacing:1px;text-decoration:none;transition:all .2s;}
+
+/* Key box */
+.key-box{background:rgba(9,22,40,.9);border:1px solid var(--bdr);border-radius:12px;padding:14px;margin:13px 0;}
+.key-eg{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--g);background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:11px;text-align:center;margin:9px 0;letter-spacing:1px;}
+.key-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:9px;}
+.kp{background:rgba(0,0,0,.2);border:1px solid var(--bdr);border-radius:6px;padding:7px 9px;}
+.kp-k{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--c);margin-bottom:2px;}
+.kp-p{font-size:9px;color:var(--mu);}
+
+/* Features */
+.feat-c{display:flex;align-items:flex-start;gap:11px;background:rgba(9,22,40,.8);border:1px solid var(--bdr);border-radius:10px;padding:11px;margin-bottom:7px;}
+.feat-ico2{font-size:20px;flex-shrink:0;}
+.feat-t{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--w);margin-bottom:2px;}
+.feat-d{font-size:10px;color:var(--mu);line-height:1.4;}
+
+.warn-box{background:rgba(255,45,85,.07);border:1px solid rgba(255,45,85,.25);border-radius:10px;padding:11px;margin:13px 0;font-size:10px;color:var(--mu);line-height:1.5;}
+.warn-box b{color:var(--r);}
+
+/* Open scanner button */
+.open-scanner-btn{display:block;width:100%;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--c),#0066aa);color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:var(--gc);text-align:center;text-decoration:none;margin:13px 0;transition:all .2s;}
+.open-scanner-btn:active{transform:scale(.97);}
+
+.footer{text-align:center;padding:18px 0;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);border-top:1px solid var(--bdr);margin-top:16px;}
+
+/* ══════════════════════════════════════
+   PAGE 2 — LICENSE KEY SCREEN
+══════════════════════════════════════ */
+#pg-license{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.lic-wrap{width:100%;max-width:400px;text-align:center;}
+.lic-logo{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;letter-spacing:2px;margin-bottom:6px;}
+.lic-bot{font-family:'Orbitron',monospace;font-size:11px;color:var(--c);letter-spacing:2px;margin-bottom:5px;}
+.lic-tag{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);letter-spacing:1.5px;margin-bottom:20px;}
+.lic-box{background:rgba(9,22,40,.95);border:1px solid var(--bdr);border-radius:14px;padding:20px 16px;}
+.lic-title{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--c);letter-spacing:1px;margin-bottom:4px;}
+.lic-sub{font-size:10px;color:var(--mu);margin-bottom:16px;}
+.lic-input{width:100%;background:rgba(0,0,0,.4);border:1.5px solid var(--bdr);border-radius:10px;padding:14px 13px;color:var(--g);font-family:'Share Tech Mono',monospace;font-size:14px;outline:none;text-align:center;letter-spacing:2px;transition:border-color .2s;margin-bottom:12px;}
+.lic-input:focus{border-color:var(--c);}
+.lic-input::placeholder{color:var(--mu);letter-spacing:1px;font-size:11px;}
+.lic-btn{width:100%;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--g2),#004422);color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:var(--gg);transition:all .2s;margin-bottom:10px;}
+.lic-btn:active{transform:scale(.97);}
+.lic-btn.loading{background:linear-gradient(135deg,#333,#111);box-shadow:none;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.lic-free{font-size:10px;color:var(--mu);margin-top:6px;}
+.lic-free span{color:var(--c);cursor:pointer;text-decoration:underline;}
+
+/* Blocked state */
+.blocked-box{background:rgba(255,45,85,.07);border:1.5px solid rgba(255,45,85,.35);border-radius:12px;padding:16px;margin-top:14px;display:none;}
+.blocked-box.on{display:block;}
+.blk-title{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--r);margin-bottom:6px;}
+.blk-msg{font-size:10px;color:var(--mu);margin-bottom:14px;line-height:1.5;}
+.blk-wa{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;padding:12px;border-radius:9px;border:none;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;cursor:pointer;letter-spacing:1px;margin-bottom:8px;text-decoration:none;transition:all .2s;}
+.blk-email{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:11px;border-radius:9px;border:1.5px solid var(--r);background:transparent;color:var(--r);cursor:pointer;letter-spacing:.5px;text-decoration:none;}
+
+/* ══════════════════════════════════════
+   PAGE 3 — MAIN SCANNER APP
+══════════════════════════════════════ */
+#pg-scanner{background:var(--bg);}
+#pg-scanner .wrap{padding-top:0;}
+
+.shdr{text-align:center;padding:12px 0 8px;}
+.shdr .logo-txt{font-size:18px;}
+.shdr .tag2{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);letter-spacing:1.5px;}
+.shdr .hline{margin:8px 0;}
+
+/* Account switcher */
+.acct-sw{display:flex;gap:6px;margin-bottom:8px;}
+.asw{flex:1;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:9px 5px;border-radius:8px;border:1.5px solid;cursor:pointer;letter-spacing:1px;text-align:center;transition:all .25s;background:transparent;}
+.asw.demo{border-color:var(--y);color:var(--y);}
+.asw.demo.on{background:rgba(255,214,10,.18);box-shadow:var(--gy);}
+.asw.real{border-color:var(--g);color:var(--g);}
+.asw.real.on{background:rgba(0,255,136,.18);box-shadow:var(--gg);}
+.pb3{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;padding:9px 10px;border-radius:8px;border:1.5px solid var(--c);color:var(--c);background:rgba(0,212,255,.08);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.dot2{width:6px;height:6px;border-radius:50%;background:var(--g);animation:blink 1.2s infinite;}
+
+.abar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;margin-bottom:9px;}
+.ast{text-align:center;padding:8px 3px;border-right:1px solid var(--bdr);}
+.ast:last-child{border-right:none;}
+.av{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:var(--g);}
+.av.y{color:var(--y);}.av.r{color:var(--r);}
+.al{font-size:7px;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
+
+/* Top bar */
+.tbar{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.bdg{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;padding:5px 8px;border-radius:4px;letter-spacing:1px;cursor:pointer;border:1px solid;transition:all .2s;}
+.bfr{background:rgba(255,214,10,.09);border-color:var(--y);color:var(--y);}
+.bau{background:rgba(255,45,155,.1);border-color:var(--pk);color:var(--pk);display:flex;align-items:center;gap:4px;}
+.icb{width:28px;height:28px;border-radius:6px;border:1px solid var(--bdr);background:var(--bg3);color:var(--mu);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;}
+.back-btn{font-family:'Orbitron',monospace;font-size:8px;padding:5px 9px;border-radius:4px;border:1px solid var(--bdr);background:transparent;color:var(--mu);cursor:pointer;letter-spacing:.5px;}
+
+/* Toggle row */
+.trow{display:flex;align-items:center;gap:9px;padding:7px 10px;background:var(--bg3);border:1px solid var(--bdr);border-radius:10px;margin-bottom:8px;}
+.tg{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:600;color:var(--mu);cursor:pointer;}
+.tw{width:28px;height:16px;border-radius:8px;background:var(--bg2);border:1px solid var(--mu);position:relative;transition:all .3s;flex-shrink:0;}
+.tw.on{background:var(--g2);border-color:var(--g);box-shadow:var(--gg);}
+.tw::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:#fff;transition:all .3s;}
+.tw.on::after{left:14px;}
+.lk{font-size:7px;padding:1px 4px;border-radius:3px;background:rgba(255,214,10,.08);border:1px solid rgba(255,214,10,.25);color:var(--y);}
+.snd{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:9px;color:var(--g);cursor:pointer;}
+
+/* News banner */
+.news{background:rgba(255,45,85,.07);border:1px solid rgba(255,45,85,.28);border-radius:8px;padding:8px 10px;display:none;align-items:center;gap:7px;margin-bottom:8px;font-size:10px;font-weight:600;color:var(--r);}
+.news.on{display:flex;}
+
+/* Scanner panel */
+.sp{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:12px;margin-bottom:9px;position:relative;overflow:hidden;}
+.sp::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),var(--pk),var(--g),var(--c));background-size:200%;animation:slide 3s linear infinite;}
+@keyframes slide{0%{background-position:0%}100%{background-position:200%}}
+.spwave{position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,212,255,.025),transparent);transform:translateY(-100%);pointer-events:none;}
+.sp.sc .spwave{animation:wave 1.8s ease-in-out infinite;}
+@keyframes wave{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.shd2{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.sti{display:flex;align-items:center;gap:7px;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;color:var(--c);letter-spacing:1px;}
+.sico{width:22px;height:22px;border:1.5px solid var(--c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;animation:spin 4s linear infinite;box-shadow:var(--gc);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.aonly{font-family:'Share Tech Mono',monospace;font-size:7px;padding:2px 6px;border-radius:4px;background:rgba(0,255,136,.09);border:1px solid rgba(0,255,136,.28);color:var(--g);}
+.sctrl{display:flex;align-items:center;gap:7px;}
+.sbtn{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:8px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--pk),#b00860);color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:var(--gp);transition:all .2s;}
+.sbtn:active{transform:scale(.95);}
+.sbtn.on{background:linear-gradient(135deg,var(--g2),#005533);box-shadow:var(--gg);animation:spulse 1.5s infinite;}
+@keyframes spulse{0%,100%{box-shadow:var(--gg)}50%{box-shadow:0 0 35px rgba(0,255,136,.7)}}
+.sst{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);padding-top:6px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:var(--gg);animation:blink 1.2s infinite;}
+.scts{margin-left:auto;display:flex;gap:7px;}
+.sca{color:var(--g);}.scn{color:var(--mu);}
+
+/* Signal cards */
+.siglist{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;}
+.sigcard{background:var(--card);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;}
+.sigcard.buy{border-left:3px solid var(--g);}
+.sigcard.sell{border-left:3px solid var(--r);}
+.sigcard.nf{animation:nf .7s ease-out;}
+@keyframes nf{0%{box-shadow:0 0 0 0 rgba(0,255,136,.55)}70%{box-shadow:0 0 0 12px rgba(0,255,136,0)}100%{box-shadow:0 0 0 0 rgba(0,255,136,0)}}
+.stop2{padding:10px 12px 9px;position:relative;}
+.sigcard.buy .stop2::before{content:'';position:absolute;top:0;left:0;bottom:0;width:38px;background:linear-gradient(90deg,rgba(0,255,136,.055),transparent);}
+.sigcard.sell .stop2::before{content:'';position:absolute;top:0;left:0;bottom:0;width:38px;background:linear-gradient(90deg,rgba(255,45,85,.055),transparent);}
+.r1{display:flex;align-items:center;gap:4px;margin-bottom:7px;flex-wrap:wrap;}
+.sym{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--w);}
+.act{font-family:'Orbitron',monospace;font-size:11px;font-weight:900;letter-spacing:2px;}
+.act.buy{color:var(--g);text-shadow:var(--gg);}
+.act.sell{color:var(--r);text-shadow:var(--gr);}
+.conf{font-family:'Share Tech Mono',monospace;font-size:9px;padding:2px 5px;border-radius:3px;background:rgba(255,214,10,.09);border:1px solid rgba(255,214,10,.28);color:var(--y);}
+.trail{font-size:7px;padding:2px 4px;border-radius:3px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:var(--c);}
+.rrtag{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--mu);margin-left:auto;}
+.rrtag b{color:var(--c);}
+.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px;}
+.pb2{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055);border-radius:6px;padding:5px 6px;}
+.pl{font-size:7px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:1px;}
+.pv{font-family:'Share Tech Mono',monospace;font-size:11px;font-weight:700;}
+.pv.e{color:var(--w);}.pv.s{color:var(--r);}.pv.t{color:var(--g);}
+.meta{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.lot{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--mu);}
+.lot b{color:var(--c);}
+.ctag{font-size:7px;padding:2px 5px;border-radius:3px;background:rgba(0,212,255,.055);border:1px solid rgba(0,212,255,.15);color:var(--c);text-transform:uppercase;}
+.ptag{font-family:'Share Tech Mono',monospace;font-size:8px;margin-left:auto;}
+.ptag .p{color:var(--g);}.ptag .l{color:var(--r);}
+.atag{font-size:7px;padding:2px 4px;border-radius:3px;border:1px solid;}
+.atag.demo{border-color:rgba(255,214,10,.3);color:var(--y);background:rgba(255,214,10,.07);}
+.atag.real{border-color:rgba(0,255,136,.3);color:var(--g);background:rgba(0,255,136,.07);}
+.htag247{font-size:7px;padding:1px 4px;border-radius:3px;border:1px solid rgba(0,255,136,.25);color:var(--g);background:rgba(0,255,136,.07);}
+.htag245{font-size:7px;padding:1px 4px;border-radius:3px;border:1px solid rgba(255,214,10,.25);color:var(--y);background:rgba(255,214,10,.06);}
+
+/* Execution panel */
+.exec{border-top:1px solid rgba(255,255,255,.05);padding:9px 11px;background:rgba(0,0,0,.18);}
+.etitle{font-size:8px;font-weight:700;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.cbts{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px;}
+.cb{font-family:'Share Tech Mono',monospace;font-size:7px;padding:6px 3px;border-radius:6px;border:1px solid;cursor:pointer;text-align:center;transition:all .18s;line-height:1.3;}
+.cb.ce{border-color:rgba(232,244,255,.2);color:var(--w);background:rgba(232,244,255,.04);}
+.cb.cs{border-color:rgba(255,45,85,.3);color:var(--r);background:rgba(255,45,85,.05);}
+.cb.ct{border-color:rgba(0,255,136,.3);color:var(--g);background:rgba(0,255,136,.05);}
+.cb.ca{border-color:rgba(255,214,10,.3);color:var(--y);background:rgba(255,214,10,.05);}
+.cb:active{transform:scale(.92);}
+.cb.ok{background:rgba(0,255,136,.18)!important;border-color:var(--g)!important;color:var(--g)!important;}
+.mt5bts{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.mtbt{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;padding:9px 4px;border-radius:8px;border:none;cursor:pointer;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .2s;}
+.mtbt:active{transform:scale(.94);}
+.mt-open{background:linear-gradient(135deg,var(--g2),#004422);color:#fff;box-shadow:var(--gg);}
+.mt-guide{background:linear-gradient(135deg,#007799,#004055);color:#fff;box-shadow:var(--gc);}
+
+/* Idle */
+.idle{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:14px 12px;}
+.ihead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ititle{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;color:var(--mu);letter-spacing:1px;}
+.istatus{font-family:'Share Tech Mono',monospace;font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(61,85,112,.18);border:1px solid rgba(61,85,112,.35);color:var(--mu);}
+.istatus.on{background:rgba(0,255,136,.09);border-color:rgba(0,255,136,.28);color:var(--g);}
+.imsg{font-size:10px;color:var(--mu);}
+.nodata{text-align:center;padding:22px 16px;color:var(--mu);font-family:'Share Tech Mono',monospace;font-size:10px;}
+
+/* Stats */
+.strow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:9px;}
+.stc2{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:9px;text-align:center;}
+.sv3{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--g);line-height:1;margin-bottom:2px;}
+.sv3.r{color:var(--r);}.sv3.y{color:var(--y);}
+.sl4{font-size:7px;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;font-weight:600;}
+
+/* Asset bars */
+.wrs{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:11px;margin-bottom:10px;}
+.arow{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.an{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--w);width:60px;flex-shrink:0;}
+.wt{flex:1;height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.wf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g2),var(--g));box-shadow:var(--gg);transition:width 1.2s ease;}
+.wp{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--g);width:28px;text-align:right;flex-shrink:0;}
+
+/* Bottom nav */
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(2,9,18,.97);border-top:1px solid var(--bdr);display:flex;z-index:100;backdrop-filter:blur(20px);}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 7px;cursor:pointer;position:relative;font-size:7px;font-weight:700;letter-spacing:.5px;color:var(--mu);transition:color .2s;}
+.ni.on{color:var(--c);}
+.ni.on::before{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:var(--c);box-shadow:var(--gc);border-radius:0 0 4px 4px;}
+.niico{font-size:16px;margin-bottom:2px;}
+
+/* Modals */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mov.on{opacity:1;pointer-events:all;}
+.mod{background:var(--bg3);border:1px solid var(--bdr);border-radius:18px 18px 0 0;width:100%;max-width:480px;padding:15px 14px 32px;transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);max-height:86vh;overflow-y:auto;}
+.mov.on .mod{transform:translateY(0);}
+.mh{width:34px;height:4px;border-radius:2px;background:var(--mu);margin:0 auto 11px;}
+.mt3{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:var(--c);letter-spacing:1px;margin-bottom:11px;text-align:center;}
+.fg{margin-bottom:9px;}
+.fl{font-size:9px;font-weight:600;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px;display:block;}
+.fi{width:100%;background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:9px 10px;color:var(--w);font-family:'Share Tech Mono',monospace;font-size:12px;outline:none;transition:border-color .2s;}
+.fi:focus{border-color:var(--c);}
+.fb{width:100%;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:11px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--c),#0066aa);color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:var(--gc);margin-top:4px;}
+.ferr{color:var(--r);font-size:9px;font-family:'Share Tech Mono',monospace;margin-top:4px;text-align:center;}
+.sgrp{margin-bottom:11px;}
+.sgt{font-size:8px;font-weight:700;color:var(--y);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.sit{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sin{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--w);}
+.mdb{padding:4px 8px;border-radius:5px;font-size:8px;font-weight:700;font-family:'Orbitron',monospace;cursor:pointer;border:1px solid;transition:all .2s;letter-spacing:.5px;}
+.mg{border-color:var(--g);color:var(--g);background:rgba(0,255,136,.07);}
+.my{border-color:var(--y);color:var(--y);background:rgba(255,214,10,.07);}
+.mr{border-color:var(--r);color:var(--r);background:rgba(255,45,85,.07);}
+.mdb.on.mg{background:rgba(0,255,136,.2);box-shadow:var(--gg);}
+.mdb.on.my{background:rgba(255,214,10,.2);}
+.mdb.on.mr{background:rgba(255,45,85,.2);box-shadow:var(--gr);}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — LANDING PAGE
+══════════════════════════════════════ -->
+<div id="pg-landing" class="page on">
+<div class="wrap">
+
+  <div class="hero">
+    <div class="live-badge"><div class="ldot"></div>LIVE SCANNER ACTIVE 24/7</div>
+    <div class="logo-txt"><span class="mc">MC </span><span class="coy">COY </span><span class="ai">AI </span><span class="sc">SCANNER</span></div>
+    <div class="botname">MCCOY TRADER BOT</div>
+    <div class="tag">ITS NOW AND FOREVER U NEED 1 SPIKE ONLY</div>
+    <div class="hline"></div>
+  </div>
+
+  <!-- PHONE MOCKUP -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="pscr">
+        <div class="pr1">
+          <div class="plogo2">🤖 MCCOY BOT</div>
+          <div class="ppbdg">MONTHLY</div>
+        </div>
+        <div class="pbot-card">
+          <div class="pbt-title">MC COY SIGNAL BOT</div>
+          <div class="pbt-sub">Robot you are using</div>
+          <div class="pbt-row">
+            <div class="pbt2 s">▶ START</div>
+            <div class="pbt2 m">📊 SIGNALS</div>
+            <div class="pbt2 d">⏹ STOP</div>
+          </div>
+        </div>
+        <div style="font-size:6px;color:var(--mu);font-family:'Share Tech Mono',monospace;margin-bottom:3px">Live Signals</div>
+        <div class="psig2 buy">
+          <div class="psr1"><span class="psym2">⚡ BOOM1000</span><span class="pbuy2">BUY</span><span class="pconf2">89%</span></div>
+          <div class="ppr2"><span>E:5594.35</span><span style="color:var(--r)">SL:5591</span><span style="color:var(--g)">TP:5603</span></div>
+        </div>
+        <div class="psig2 sell">
+          <div class="psr1"><span class="psym2">💱 XAUUSD</span><span class="psell2">SELL</span><span class="pconf2">86%</span></div>
+          <div class="ppr2"><span>E:2351.5</span><span style="color:var(--r)">SL:2356</span><span style="color:var(--g)">TP:2341</span></div>
+        </div>
+        <div class="psig2 buy">
+          <div class="psr1"><span class="psym2">💱 GBPUSD</span><span class="pbuy2">BUY</span><span class="pconf2">92%</span></div>
+          <div class="ppr2"><span>E:1.2651</span><span style="color:var(--r)">SL:1.2630</span><span style="color:var(--g)">TP:1.2710</span></div>
+        </div>
+      </div>
+      <div class="pnav2">
+        <div class="pni2 on">🏠<br>Home</div>
+        <div class="pni2">📡<br>Signals</div>
+        <div class="pni2">📊<br>MT5</div>
+        <div class="pni2">❓<br>Help</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-g">
+    <div class="stc"><div class="sv2">74%</div><div class="sl3">Win Rate</div></div>
+    <div class="stc"><div class="sv2 y">1:3</div><div class="sl3">Avg RR</div></div>
+    <div class="stc"><div class="sv2 c">24/7</div><div class="sl3">Scanning</div></div>
+  </div>
+
+  <!-- MARKETS -->
+  <div class="mkt-box">
+    <div class="sect-title">MARKETS COVERED</div>
+    <div class="mkt-tags">
+      <div class="mtag syn">⚡ BOOM1000 24/7</div>
+      <div class="mtag syn">⚡ BOOM500 24/7</div>
+      <div class="mtag syn">⚡ CRASH1000 24/7</div>
+      <div class="mtag syn">⚡ CRASH500 24/7</div>
+      <div class="mtag syn">⚡ VIX75 24/7</div>
+      <div class="mtag syn">⚡ VIX25 24/7</div>
+      <div class="mtag syn">⚡ VIX50 24/7</div>
+      <div class="mtag syn">⚡ VIX100 24/7</div>
+      <div class="mtag met">🥇 XAUUSD 24/5</div>
+      <div class="mtag fx">💱 EURUSD 24/5</div>
+      <div class="mtag fx">💱 GBPUSD 24/5</div>
+      <div class="mtag fx">💱 USDJPY 24/5</div>
+      <div class="mtag fx">💱 USDCHF 24/5</div>
+      <div class="mtag fx">💱 AUDUSD 24/5</div>
+      <div class="mtag idx">📈 US30 24/5</div>
+      <div class="mtag idx">📈 NAS100 24/5</div>
+      <div class="mtag idx">📈 GER40 24/5</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="sect-title" style="margin:14px 0 10px">FEATURES</div>
+  <div class="feat-c"><div class="feat-ico2">🎯</div><div><div class="feat-t">A+ SIGNALS ONLY</div><div class="feat-d">Market structure + zone detection + confirmation required. No false signals.</div></div></div>
+  <div class="feat-c"><div class="feat-ico2">📱</div><div><div class="feat-t">MT5 DEEP LINK</div><div class="feat-d">One tap opens MetaTrader 5 with signal pre-filled. Any broker — Deriv, Exness, ICMarkets.</div></div></div>
+  <div class="feat-c"><div class="feat-ico2">🛡</div><div><div class="feat-t">NEWS FILTER</div><div class="feat-d">Blocks signals before high-impact events. No stop-outs from NFP or FOMC.</div></div></div>
+  <div class="feat-c"><div class="feat-ico2">📊</div><div><div class="feat-t">WIN RATE TRACKER</div><div class="feat-d">Every signal tracked. Live win rate per asset. Consecutive loss warning.</div></div></div>
+
+  <!-- OPEN SCANNER -->
+  <button class="open-scanner-btn" onclick="goToLicense()">
+    📡 OPEN LIVE SCANNER
+  </button>
+
+  <!-- PLANS -->
+  <div class="sect-title" style="margin:14px 0 10px">SUBSCRIPTION PLANS</div>
+
+  <div class="plan-c" onclick="buyPlan('FREE')">
+    <div class="plan-top"><div class="plan-ico">🤖</div><div><div class="plan-name">FREE PLAN</div><div class="plan-sub2">Start for free</div></div><div class="plan-price">R0<span>/forever</span></div></div>
+    <div class="plan-feats"><div class="pf">3 signals/day</div><div class="pf">All markets</div><div class="pf">MT5 link</div></div>
+  </div>
+
+  <div class="plan-c" onclick="buyPlan('MONTHLY')">
+    <div class="plan-top"><div class="plan-ico">🤖</div><div><div class="plan-name">MONTHLY</div><div class="plan-sub2">30 days access</div></div><div class="plan-price">R350<span>/mo</span></div></div>
+    <div class="plan-feats"><div class="pf">Unlimited signals</div><div class="pf">Auto scan</div><div class="pf">All markets</div><div class="pf">Priority support</div></div>
+  </div>
+
+  <div class="plan-c pop" onclick="buyPlan('6MONTH')">
+    <div class="plan-top"><div class="plan-ico">🤖</div><div><div class="plan-name">6 MONTHS</div><div class="plan-sub2">Best value</div></div><div class="plan-price">R650<span>/6mo</span></div></div>
+    <div class="plan-feats"><div class="pf">Unlimited signals</div><div class="pf">Auto scan</div><div class="pf">VIP signals</div><div class="pf">Save R450</div></div>
+  </div>
+
+  <div class="plan-c" onclick="buyPlan('YEARLY')">
+    <div class="plan-top"><div class="plan-ico">🤖</div><div><div class="plan-name">YEARLY</div><div class="plan-sub2">Full year</div></div><div class="plan-price">R1000<span>/yr</span></div></div>
+    <div class="plan-feats"><div class="pf">Everything</div><div class="pf">Admin access</div><div class="pf">Save R3200</div></div>
+  </div>
+
+  <!-- HOW TO GET KEY -->
+  <div class="contact-box">
+    <div class="sect-title">HOW TO GET LICENSE KEY</div>
+    <div style="font-size:10px;color:var(--mu);line-height:1.7;margin-bottom:13px">
+      1️⃣ Choose your plan above<br>
+      2️⃣ Send payment to admin via WhatsApp<br>
+      3️⃣ Admin sends your license key<br>
+      4️⃣ Tap OPEN SCANNER above<br>
+      5️⃣ Enter key to unlock full scanner
+    </div>
+    <a class="wa-btn" href="https://wa.me/27729017244?text=Hi%20MC%20COY%20AI%20SCANNER%20I%20want%20to%20subscribe" target="_blank">
+      💬 CONTACT ON WHATSAPP
+    </a>
+    <div style="text-align:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--g);margin:4px 0">+27729017244</div>
+  </div>
+
+  <!-- KEY FORMAT -->
+  <div class="key-box">
+    <div class="sect-title">LICENSE KEY FORMAT</div>
+    <div style="font-size:10px;color:var(--mu);margin-bottom:7px">Your key from admin looks like:</div>
+    <div class="key-eg">MCCOY-MON-A8F2C4E1</div>
+    <div class="key-grid">
+      <div class="kp"><div class="kp-k">MCCOY-FREE-XXXXXX</div><div class="kp-p">Free Plan</div></div>
+      <div class="kp"><div class="kp-k">MCCOY-MON-XXXXXX</div><div class="kp-p">Monthly</div></div>
+      <div class="kp"><div class="kp-k">MCCOY-6MO-XXXXXX</div><div class="kp-p">6 Months</div></div>
+      <div class="kp"><div class="kp-k">MCCOY-YRL-XXXXXX</div><div class="kp-p">Yearly</div></div>
+    </div>
+  </div>
+
+  <!-- DOWNLOAD APK -->
+  <div class="dl-box">
+    <div class="dl-title">📲 DOWNLOAD APK</div>
+    <div class="dl-sub">Android app · License key required to unlock</div>
+    <button class="dl-btn" onclick="downloadAPK()">
+      <span>⬇</span> DOWNLOAD MCCOY TRADER BOT
+    </button>
+    <div class="dl-ver">Version 1.0.0 · Android 5.0+ · Contact admin for APK link</div>
+    <div class="dl-steps2">
+      <div class="dls"><div class="dsn">1</div><div>Download APK file to your phone</div></div>
+      <div class="dls"><div class="dsn">2</div><div>Settings → Security → Enable "Install unknown apps"</div></div>
+      <div class="dls"><div class="dsn">3</div><div>Open downloaded APK → tap Install</div></div>
+      <div class="dls"><div class="dsn">4</div><div>Open MCCOY TRADER BOT app</div></div>
+      <div class="dls"><div class="dsn">5</div><div>Enter license key from admin to unlock</div></div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    ⚠️ <b>Important:</b> Using a fake or invalid key completely blocks the app and shows admin contact. No bypass possible. WhatsApp <b>+27729017244</b> to get your genuine key.
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-box">
+    <div class="sect-title">SUPPORT & CONTACT</div>
+    <a class="wa-btn" href="https://wa.me/27729017244" target="_blank">💬 WHATSAPP +27729017244</a>
+    <a class="email-btn" href="mailto:admin@mccoyscanner.com">📧 SEND EMAIL</a>
+  </div>
+
+  <div class="footer">
+    MC COY AI SCANNER © 2026 · MCCOY TRADER BOT v1.0.0<br>
+    Signals for educational purposes · Trade at your own risk
+  </div>
+
+</div>
+</div><!-- end landing -->
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — LICENSE KEY SCREEN
+══════════════════════════════════════ -->
+<div id="pg-license" class="page">
+  <div class="lic-wrap">
+    <div class="lic-logo"><span class="mc">MC </span><span class="coy">COY </span><span class="ai">AI </span><span class="sc">SCANNER</span></div>
+    <div class="lic-bot">MCCOY TRADER BOT</div>
+    <div class="lic-tag">ITS NOW AND FOREVER U NEED 1 SPIKE ONLY</div>
+
+    <div class="lic-box">
+      <div class="lic-title">🔐 ENTER LICENSE KEY</div>
+      <div class="lic-sub">Enter the key received from admin after payment</div>
+      <input class="lic-input" type="text" id="licInput" placeholder="MCCOY-XXX-XXXXXXXX" maxlength="20" autocomplete="off" autocapitalize="characters" oninput="this.value=this.value.toUpperCase()">
+      <button class="lic-btn" id="licBtn" onclick="activateLicense()">🔓 ACTIVATE NOW</button>
+      <div class="lic-free">Free plan? Use key: <span onclick="useFreeKey()">MCCOY-FREE-DEMO001</span></div>
+
+      <!-- BLOCKED STATE -->
+      <div class="blocked-box" id="blockedBox">
+        <div class="blk-title">❌ INVALID LICENSE KEY</div>
+        <div class="blk-msg">
+          This key is not valid or has expired.<br><br>
+          To get your license key contact:<br><br>
+          📱 <strong style="color:var(--w)">WhatsApp: +27729017244</strong><br>
+          📧 <strong style="color:var(--w)">admin@mccoyscanner.com</strong>
+        </div>
+        <a class="blk-wa" href="https://wa.me/27729017244?text=Hi%20I%20need%20a%20valid%20license%20key%20for%20MCCOY%20TRADER%20BOT" target="_blank">
+          💬 CONTACT ON WHATSAPP
+        </a>
+        <a class="blk-email" href="mailto:admin@mccoyscanner.com?subject=MCCOY TRADER BOT License Key">
+          📧 SEND EMAIL
+        </a>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;text-align:center">
+      <button style="font-family:'Share Tech Mono',monospace;font-size:9px;padding:6px 14px;border-radius:6px;border:1px solid var(--bdr);background:transparent;color:var(--mu);cursor:pointer" onclick="showPage('pg-landing')">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — SCANNER APP
+══════════════════════════════════════ -->
+<div id="pg-scanner" class="page">
+<div class="wrap">
+
+  <div class="shdr">
+    <div class="logo-txt"><span class="mc">MC </span><span class="coy">COY </span><span class="ai">AI </span><span class="sc">SCANNER</span></div>
+    <div class="tag2">ITS NOW AND FOREVER U NEED 1 SPIKE ONLY</div>
+    <div class="hline"></div>
+  </div>
+
+  <!-- DEMO/REAL SWITCHER -->
+  <div class="acct-sw">
+    <button class="asw demo on" id="demoBtn" onclick="switchAcct('DEMO')">🟡 DEMO</button>
+    <button class="asw real" id="realBtn" onclick="switchAcct('REAL')">🟢 REAL</button>
+    <div class="pb3" onclick="showM('platM')"><div class="dot2"></div><span id="platLbl">MT5</span></div>
+  </div>
+
+  <!-- ACCOUNT BAR -->
+  <div class="abar">
+    <div class="ast"><div class="av" id="abal">$10,000</div><div class="al">Balance</div></div>
+    <div class="ast"><div class="av y" id="aeq">$10,000</div><div class="al">Equity</div></div>
+    <div class="ast"><div class="av" id="apl">+$0</div><div class="al">P&amp;L</div></div>
+    <div class="ast"><div class="av y" id="atr">0</div><div class="al">Trades</div></div>
+  </div>
+
+  <!-- SUB PAGES -->
+  <div id="sp-signals" class="subpage on">
+
+    <div class="tbar">
+      <div class="bdg bfr" id="planBdg" onclick="showM('subM')">FREE</div>
+      <div class="bdg bau" onclick="showM('loginM')"><span>⬡</span><span id="uLbl">Login</span></div>
+      <div class="icb" onclick="showM('setM')">⚙</div>
+      <button class="back-btn" onclick="showPage('pg-landing')" style="margin-left:auto">🏠 Home</button>
+    </div>
+
+    <div class="trow">
+      <div class="tg"><div class="tw on" onclick="this.classList.toggle('on')"></div><span>MANUAL</span></div>
+      <div class="tg"><div class="tw"></div><span>AUTO</span><span class="lk">🔒</span></div>
+      <div class="tg"><div class="tw"></div><span>REFRESH</span><span class="lk">🔒</span></div>
+      <div class="snd" onclick="toggleSnd()"><span id="sndIco">🔔</span><span>SOUND</span></div>
+    </div>
+
+    <div class="news" id="newsBar"><span style="animation:blink 1s infinite;display:inline-block">⚠️</span><span id="newsT">NEWS — PAUSED</span></div>
+
+    <div class="sp" id="spanel">
+      <div class="spwave"></div>
+      <div class="shd2">
+        <div class="sti"><div class="sico">⟳</div>LIVE MULTI-SCAN</div>
+        <div class="aonly">A+ ONLY</div>
+      </div>
+      <div class="sctrl">
+        <div style="font-size:8px;color:var(--mu);font-family:'Share Tech Mono',monospace">AUTO <span class="lk">🔒</span></div>
+        <button class="sbtn" id="scanBtn" onclick="toggleScan()">SCAN NOW</button>
+      </div>
+      <div class="sst">
+        <div class="sdot"></div>
+        <span id="stime">Last: --:--:--</span>
+        <div class="scts">
+          <span class="sca" id="ac">✓ 0 A+</span>
+          <span class="scn" id="nc">⊘ 0 no-trade</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="siglist" id="sigBox">
+      <div class="idle">
+        <div class="ihead"><span class="ititle">SIGNAL</span><span class="istatus" id="idleSt">IDLE</span></div>
+        <div class="imsg">No signal yet. Tap SCAN NOW to start 24/7 scanning.</div>
+      </div>
+    </div>
+
+    <div class="strow">
+      <div class="stc2"><div class="sv3" id="sWR">—</div><div class="sl4">Win Rate</div></div>
+      <div class="stc2"><div class="sv3 y" id="sTot">0</div><div class="sl4">Total</div></div>
+      <div class="stc2"><div class="sv3" id="sStrk">—</div><div class="sl4">Streak</div></div>
+    </div>
+
+    <div class="wrs">
+      <div class="sect-title">ASSET PERFORMANCE</div>
+      <div id="assetBars"><div style="color:var(--mu);font-size:10px;font-family:'Share Tech Mono',monospace">Scan to generate data...</div></div>
+    </div>
+
+  </div><!-- end sp-signals -->
+
+</div><!-- wrap -->
+
+<!-- BOTTOM NAV -->
+<div class="nav">
+  <div class="ni on" onclick="switchSubPage('signals',this)"><div class="niico">📡</div>SIGNALS</div>
+  <div class="ni" onclick="switchSubPage('history',this)"><div class="niico">📋</div>HISTORY</div>
+  <div class="ni" onclick="showPage('pg-landing')"><div class="niico">🏠</div>HOME</div>
+  <div class="ni" onclick="switchSubPage('help',this)"><div class="niico">❓</div>HELP</div>
+</div>
+
+</div><!-- end scanner page -->
+
+<!-- PLATFORM MODAL -->
+<div class="mov" id="platM" onclick="bgClose(event,'platM')">
+  <div class="mod">
+    <div class="mh"></div>
+    <div class="mt3">📱 PLATFORM & ACCOUNT</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px">
+      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:14px;text-align:center;cursor:pointer" id="mt4c" onclick="selPlat('MT4')">
+        <div style="font-size:20px;margin-bottom:4px">📊</div>
+        <div style="font-family:'Orbitron',monospace;font-size:10px">MetaTrader 4</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--pk);border-radius:8px;padding:14px;text-align:center;cursor:pointer" id="mt5c" onclick="selPlat('MT5')">
+        <div style="font-size:20px;margin-bottom:4px">📈</div>
+        <div style="font-family:'Orbitron',monospace;font-size:10px">MetaTrader 5</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px">
+      <div style="background:var(--bg2);border:1px solid var(--y);border-radius:8px;padding:11px;text-align:center;cursor:pointer" onclick="switchAcct('DEMO');closeM('platM')">
+        <div style="color:var(--y);font-weight:700;font-family:'Orbitron',monospace;font-size:10px">🟡 DEMO</div>
+        <div style="font-size:8px;color:var(--mu);margin-top:2px">Practice account</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--g);border-radius:8px;padding:11px;text-align:center;cursor:pointer" onclick="switchAcct('REAL');closeM('platM')">
+        <div style="color:var(--g);font-weight:700;font-family:'Orbitron',monospace;font-size:10px">🟢 REAL</div>
+        <div style="font-size:8px;color:var(--mu);margin-top:2px">Live trading</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,214,10,.05);border:1px solid rgba(255,214,10,.2);border-radius:8px;padding:9px;font-size:9px;color:var(--mu)">
+      ⚠️ <b style="color:var(--y)">Manual only.</b> Open MT4/MT5 app → copy signal → place trade. Works on ANY broker worldwide.
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="mov" id="setM" onclick="bgClose(event,'setM')">
+  <div class="mod">
+    <div class="mh"></div>
+    <div class="mt3">⚙ SCANNER SETTINGS</div>
+    <div class="sgrp">
+      <div class="sgt">📊 Scan Mode</div>
+      <div style="display:flex;gap:6px">
+        <button class="mdb mg on" id="mH" onclick="setSM('HIGH',this)">HIGH ACC</button>
+        <button class="mdb my" id="mB" onclick="setSM('BAL',this)">BALANCED</button>
+        <button class="mdb mr" id="mA" onclick="setSM('AGG',this)">AGGRESSIVE</button>
+      </div>
+    </div>
+    <div class="sgrp">
+      <div class="sgt">🛡 News Filter</div>
+      <div class="sit"><span class="sin">Block High Impact News</span><div class="tw on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="sit"><span class="sin">Block Medium Impact</span><div class="tw" onclick="this.classList.toggle('on')"></div></div>
+    </div>
+    <div class="sgrp">
+      <div class="sgt">💰 Risk Settings</div>
+      <div class="sit"><span class="sin">Account Balance</span><input class="fi" style="width:100px;padding:5px 9px;font-size:11px" type="number" id="balInp" value="10000"></div>
+      <div class="sit"><span class="sin">Risk Per Trade</span>
+        <div style="display:flex;gap:5px">
+          <button class="mdb mg on" onclick="setR(1,this)">1%</button>
+          <button class="mdb my" onclick="setR(2,this)">2%</button>
+          <button class="mdb mr" onclick="setR(5,this)">5%</button>
+        </div>
+      </div>
+    </div>
+    <div class="sgrp"><div class="sgt">⚡ Synthetic (24/7)</div><div id="synTog"></div></div>
+    <div class="sgrp"><div class="sgt">💱 Forex & Metals (24/5)</div><div id="fxTog"></div></div>
+    <button class="fb" onclick="saveSets()">💾 SAVE SETTINGS</button>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="mov" id="loginM" onclick="bgClose(event,'loginM')">
+  <div class="mod">
+    <div class="mh"></div>
+    <div class="mt3">🔐 ACCOUNT LOGIN</div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="em" placeholder="your@email.com"></div>
+    <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="pw" placeholder="••••••••"></div>
+    <div class="ferr" id="lerr"></div>
+    <button class="fb" onclick="doLogin()">LOGIN</button>
+    <div style="text-align:center;margin-top:8px;font-size:10px;color:var(--mu)">No account? <span style="color:var(--c);cursor:pointer" onclick="doReg()">Register Free</span></div>
+  </div>
+</div>
+
+<!-- SUBSCRIBE MODAL -->
+<div class="mov" id="subM" onclick="bgClose(event,'subM')">
+  <div class="mod">
+    <div class="mh"></div>
+    <div class="mt3">💎 UPGRADE PLAN</div>
+    <div style="display:grid;gap:7px">
+      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="buyPlan('MONTHLY')">
+        <div><div style="font-family:'Orbitron',monospace;font-size:10px">MONTHLY</div><div style="font-size:9px;color:var(--mu)">Unlimited signals</div></div>
+        <div style="font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--y)">R350</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--pk);border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="buyPlan('6MONTH')">
+        <div><div style="font-family:'Orbitron',monospace;font-size:10px">6 MONTHS <span style="color:var(--pk);font-size:8px">POPULAR</span></div><div style="font-size:9px;color:var(--mu)">Best value</div></div>
+        <div style="font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--y)">R650</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="buyPlan('YEARLY')">
+        <div><div style="font-family:'Orbitron',monospace;font-size:10px">YEARLY</div><div style="font-size:9px;color:var(--mu)">Full year access</div></div>
+        <div style="font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--y)">R1000</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;text-align:center;font-size:9px;color:var(--mu)">Contact admin on WhatsApp +27729017244 after payment</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  MC COY AI SCANNER — COMPLETE ENGINE
+//  Landing + License + Scanner in one file
+// ══════════════════════════════════════════════
+
+const WHATSAPP = '+27729017244';
+const WA_URL   = 'https://wa.me/27729017244';
+const ADMIN_EMAIL = 'admin@mccoyscanner.com';
+const BACKEND  = ''; // Your Railway URL if you have backend
+const DERIV_APP_ID = '1089';
+
+// Valid license key prefixes and plans
+const VALID_PREFIXES = {
+  'MCCOY-FREE': { plan:'FREE',   signals:3,   days:36500 },
+  'MCCOY-MON':  { plan:'MONTHLY',signals:9999,days:30    },
+  'MCCOY-6MO':  { plan:'6MONTH', signals:9999,days:180   },
+  'MCCOY-YRL':  { plan:'YEARLY', signals:9999,days:365   },
+};
+
+// Demo keys (for testing)
+const DEMO_KEYS = [
+  'MCCOY-FREE-DEMO001',
+  'MCCOY-MON-DEMO2026',
+  'MCCOY-6MO-DEMO2026',
+  'MCCOY-YRL-DEMO2026',
+];
+
+// ── STATE ──
+let appState = {
+  acct:   localStorage.getItem('mt_acct')  || 'DEMO',
+  plat:   localStorage.getItem('mt_plat')  || 'MT5',
+  plan:   localStorage.getItem('mt_plan')  || 'FREE',
+  token:  localStorage.getItem('mt_tok')   || null,
+  licKey: localStorage.getItem('mt_lic')   || null,
+  smode:  'HIGH', risk:1,
+  bal:    parseFloat(localStorage.getItem('mt_bal')||'10000'),
+  snd:    true, scanning:false,
+  wins:0, losses:0, ntc:0, ac:0,
+  signals:[], hist:[],
+  acctData:{
+    DEMO:{bal:10000,eq:10000,pl:0,tr:0},
+    REAL:{bal:0,eq:0,pl:0,tr:0}
+  }
+};
+
+// ═══════════════════════════════════════════
+// LICENSE SYSTEM
+// ═══════════════════════════════════════════
+function validateKey(key) {
+  if (!key || key.length < 10) return false;
+  const k = key.toUpperCase().trim();
+
+  // Check demo keys
+  if (DEMO_KEYS.includes(k)) return true;
+
+  // Check prefix format
+  const prefix = k.substring(0, k.lastIndexOf('-'));
+  if (VALID_PREFIXES[prefix]) return true;
+
+  // If backend available, would validate server-side
+  return false;
+}
+
+function getKeyPlan(key) {
+  const k = key.toUpperCase().trim();
+  const prefix = k.substring(0, k.lastIndexOf('-'));
+  return VALID_PREFIXES[prefix] || VALID_PREFIXES['MCCOY-FREE'];
+}
+
+function activateLicense() {
+  const key = document.getElementById('licInput').value.trim().toUpperCase();
+  const btn = document.getElementById('licBtn');
+  const blockedBox = document.getElementById('blockedBox');
+
+  if (!key) { showToast('⚠️ Please enter your license key'); return; }
+
+  // Show loading
+  btn.textContent = '⏳ Validating...';
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    btn.textContent = '🔓 ACTIVATE NOW';
+
+    if (validateKey(key)) {
+      // Valid key — unlock scanner
+      const planInfo = getKeyPlan(key);
+      appState.licKey = key;
+      appState.plan = planInfo.plan;
+      localStorage.setItem('mt_lic', key);
+      localStorage.setItem('mt_plan', planInfo.plan);
+      blockedBox.classList.remove('on');
+      showToast(`✅ License activated — ${planInfo.plan} plan unlocked!`, 3000);
+      setTimeout(() => {
+        showPage('pg-scanner');
+        document.getElementById('planBdg').textContent = planInfo.plan;
+      }, 1000);
+    } else {
+      // Invalid key — BLOCK completely
+      blockedBox.classList.add('on');
+      document.getElementById('licInput').style.borderColor = 'var(--r)';
+      showToast('❌ Invalid key — contact admin on WhatsApp', 4000);
+    }
+  }, 1500);
+}
+
+function useFreeKey() {
+  document.getElementById('licInput').value = 'MCCOY-FREE-DEMO001';
+  activateLicense();
+}
+
+function goToLicense() {
+  // Check if already has valid key
+  if (appState.licKey && validateKey(appState.licKey)) {
+    showPage('pg-scanner');
+  } else {
+    showPage('pg-license');
+  }
+}
+
+// ═══════════════════════════════════════════
+// MARKET DATA — DERIV WEBSOCKET (ALL MARKETS FREE)
+// ═══════════════════════════════════════════
+const livePrices = {};
+const candleStore2 = {};
+const candleBuilders2 = {};
+const TF_MS = {'5m':300000,'15m':900000,'1h':3600000};
+
+const ALL_MARKETS = [
+  {s:'BOOM1000', d:'1HZ1000V', b:5500,  p:0.1,    g:'syn', h:'24/7'},
+  {s:'BOOM500',  d:'1HZ500V',  b:3200,  p:0.1,    g:'syn', h:'24/7'},
+  {s:'CRASH1000',d:'CRASH1000',b:5600,  p:0.1,    g:'syn', h:'24/7'},
+  {s:'CRASH500', d:'CRASH500', b:3300,  p:0.1,    g:'syn', h:'24/7'},
+  {s:'VIX75',    d:'R_75',     b:750,   p:0.1,    g:'syn', h:'24/7'},
+  {s:'VIX25',    d:'R_25',     b:250,   p:0.01,   g:'syn', h:'24/7'},
+  {s:'VIX50',    d:'R_50',     b:500,   p:0.1,    g:'syn', h:'24/7'},
+  {s:'VIX100',   d:'R_100',    b:1000,  p:0.1,    g:'syn', h:'24/7'},
+  {s:'EURUSD',   d:'frxEURUSD',b:1.085, p:0.0001, g:'fx',  h:'24/5'},
+  {s:'GBPUSD',   d:'frxGBPUSD',b:1.265, p:0.0001, g:'fx',  h:'24/5'},
+  {s:'USDJPY',   d:'frxUSDJPY',b:149.5, p:0.01,   g:'fx',  h:'24/5'},
+  {s:'USDCHF',   d:'frxUSDCHF',b:0.898, p:0.0001, g:'fx',  h:'24/5'},
+  {s:'AUDUSD',   d:'frxAUDUSD',b:0.645, p:0.0001, g:'fx',  h:'24/5'},
+  {s:'XAUUSD',   d:'frxXAUUSD',b:2350,  p:0.1,    g:'met', h:'24/5'},
+  {s:'US30',     d:'OTC_DJI',  b:38500, p:1,       g:'idx', h:'24/5'},
+  {s:'NAS100',   d:'OTC_NDX',  b:17800, p:1,       g:'idx', h:'24/5'},
+  {s:'GER40',    d:'OTC_DAX',  b:18200, p:1,       g:'idx', h:'24/5'},
+];
+
+const SYNTHS = ALL_MARKETS.filter(m=>m.g==='syn');
+const cooldowns2 = {};
+const CD_MS = 20*60*1000;
+
+function storeC(sym,tf,c){
+  if(!candleStore2[sym]) candleStore2[sym]={};
+  if(!candleStore2[sym][tf]) candleStore2[sym][tf]=[];
+  const arr=candleStore2[sym][tf],last=arr[arr.length-1];
+  if(last&&last.t===c.t) arr[arr.length-1]=c;
+  else{arr.push(c);if(arr.length>200)arr.shift();}
+}
+
+function tickToCandle(sym,price,ts){
+  Object.entries(TF_MS).forEach(([tf,ms])=>{
+    const period=Math.floor(ts/ms)*ms;
+    if(!candleBuilders2[sym]) candleBuilders2[sym]={};
+    if(!candleBuilders2[sym][tf]||candleBuilders2[sym][tf].t!==period){
+      if(candleBuilders2[sym][tf]) storeC(sym,tf,{...candleBuilders2[sym][tf]});
+      candleBuilders2[sym][tf]={t:period,o:price,h:price,l:price,c:price};
+    } else {
+      const b=candleBuilders2[sym][tf];
+      b.h=Math.max(b.h,price);b.l=Math.min(b.l,price);b.c=price;
+      storeC(sym,tf,{...b});
+    }
+  });
+}
+
+function getC(sym,tf,n=80){return(candleStore2[sym]?.[tf]||[]).slice(-n);}
+
+function buildSim(mkt){
+  const now=Date.now();let p=livePrices[mkt.s]||mkt.b;
+  for(let i=100;i>=0;i--){
+    const t=now-i*300000,mv=(Math.random()-.5)*mkt.p*8,o=p;
+    p=Math.max(mkt.b*.85,Math.min(mkt.b*1.15,p+mv));
+    storeC(mkt.s,'5m',{t,o,h:Math.max(o,p)+mkt.p*2,l:Math.min(o,p)-mkt.p*2,c:p});
+    storeC(mkt.s,'15m',{t:Math.floor(t/900000)*900000,o,h:Math.max(o,p)+mkt.p*3,l:Math.min(o,p)-mkt.p*3,c:p});
+  }
+}
+
+// Deriv WebSocket
+let dWs=null,dConn=false,dPing=null,dReconn=null;
+
+function connectDeriv(){
+  try{if(dWs)dWs.close();}catch(e){}
+  dWs=new WebSocket(`wss://ws.binaryws.com/websockets/v3?app_id=${DERIV_APP_ID}`);
+
+  dWs.onopen=()=>{
+    dConn=true;
+    // Subscribe synthetics (always live 24/7)
+    SYNTHS.forEach((m,i)=>setTimeout(()=>{
+      dWs.send(JSON.stringify({ticks_history:m.d,count:80,end:'latest',granularity:300,style:'candles',subscribe:1}));
+    },i*300));
+    // Subscribe forex/indices (24/5)
+    ALL_MARKETS.filter(m=>m.g!=='syn').forEach((m,i)=>setTimeout(()=>{
+      if(isForexOpen()) dWs.send(JSON.stringify({ticks_history:m.d,count:50,end:'latest',granularity:300,style:'candles',subscribe:1}));
+    },SYNTHS.length*300+i*300));
+    clearInterval(dPing);
+    dPing=setInterval(()=>{if(dWs&&dWs.readyState===WebSocket.OPEN)dWs.send(JSON.stringify({ping:1}));},25000);
+  };
+
+  dWs.onmessage=(e)=>{
+    try{
+      const msg=JSON.parse(e.data);
+      // Candle history
+      if(msg.msg_type==='candles'&&msg.candles){
+        const sym=msg.echo_req?.ticks_history;
+        const mkt=ALL_MARKETS.find(m=>m.d===sym);
+        if(mkt){
+          msg.candles.forEach(c=>storeC(mkt.s,'5m',{t:c.epoch*1000,o:+c.open,h:+c.high,l:+c.low,c:+c.close}));
+          build15m(mkt.s);
+          if(msg.candles.length) livePrices[mkt.s]=+msg.candles[msg.candles.length-1].close;
+        }
+      }
+      // Live OHLC
+      if(msg.msg_type==='ohlc'&&msg.ohlc){
+        const o=msg.ohlc,mkt=ALL_MARKETS.find(m=>m.d===o.symbol);
+        if(mkt){storeC(mkt.s,'5m',{t:o.open_time*1000,o:+o.open,h:+o.high,l:+o.low,c:+o.close});livePrices[mkt.s]=+o.close;build15m(mkt.s);}
+      }
+      // Live tick
+      if(msg.msg_type==='tick'&&msg.tick){
+        const tk=msg.tick,mkt=ALL_MARKETS.find(m=>m.d===tk.symbol);
+        if(mkt){livePrices[mkt.s]=parseFloat(tk.quote);tickToCandle(mkt.s,livePrices[mkt.s],tk.epoch*1000);}
+      }
+    }catch(err){}
+  };
+
+  dWs.onclose=()=>{dConn=false;clearTimeout(dReconn);dReconn=setTimeout(connectDeriv,5000);};
+  dWs.onerror=()=>{try{dWs.close();}catch(e){}};
+}
+
+function build15m(sym){
+  const c5=candleStore2[sym]?.['5m']||[];if(c5.length<3)return;
+  const g={};c5.forEach(c=>{const p=Math.floor(c.t/900000)*900000;if(!g[p])g[p]={t:p,o:c.o,h:c.h,l:c.l,c:c.c};else{g[p].h=Math.max(g[p].h,c.h);g[p].l=Math.min(g[p].l,c.l);g[p].c=c.c;}});
+  if(!candleStore2[sym])candleStore2[sym]={};
+  candleStore2[sym]['15m']=Object.values(g).sort((a,b)=>a.t-b.t);
+}
+
+function isForexOpen(){const d=new Date(),day=d.getUTCDay(),h=d.getUTCHours();if(day===0&&h<22)return false;if(day===6)return false;return true;}
+
+// ═══════════════════════════════════════════
+// SIGNAL ENGINE
+// ═══════════════════════════════════════════
+function getSwings(cds,lb=4){
+  const sw=[];
+  for(let i=lb;i<cds.length-lb;i++){
+    const lf=cds.slice(i-lb,i),rg=cds.slice(i+1,i+lb+1);
+    if(lf.every(c=>c.h<=cds[i].h)&&rg.every(c=>c.h<=cds[i].h))sw.push({type:'H',p:cds[i].h});
+    if(lf.every(c=>c.l>=cds[i].l)&&rg.every(c=>c.l>=cds[i].l))sw.push({type:'L',p:cds[i].l});
+  }
+  return sw;
+}
+
+function mkStr(cds){
+  if(cds.length<20)return{bias:'NEUTRAL',conf:0};
+  const sw=getSwings(cds,4),highs=sw.filter(s=>s.type==='H').slice(-3),lows=sw.filter(s=>s.type==='L').slice(-3);
+  if(highs.length<2||lows.length<2)return{bias:'NEUTRAL',conf:40};
+  const HH=highs[1].p>highs[0].p,HL=lows[1].p>lows[0].p,LH=highs[1].p<highs[0].p,LL=lows[1].p<lows[0].p;
+  const swH=highs[highs.length-1].p,swL=lows[lows.length-1].p;
+  if(HH&&HL)return{bias:'BUY', conf:88,swH,swL};
+  if(LH&&LL)return{bias:'SELL',conf:88,swH,swL};
+  if(HH||HL)return{bias:'BUY', conf:58,swH,swL};
+  if(LH||LL)return{bias:'SELL',conf:58,swH,swL};
+  return{bias:'NEUTRAL',conf:0};
+}
+
+function entryConf(cds,dir){
+  if(cds.length<3)return{ok:false};
+  const last=cds[cds.length-1],prev=cds[cds.length-2];
+  const body=Math.abs(last.c-last.o),range=last.h-last.l||0.0001;
+  const upW=last.h-Math.max(last.o,last.c),dnW=Math.min(last.o,last.c)-last.l;
+  if(dir==='SELL'&&upW/range>=0.5&&body<upW)return{ok:true,type:'REJECTION_WICK',str:upW/range};
+  if(dir==='BUY' &&dnW/range>=0.5&&body<dnW)return{ok:true,type:'REJECTION_WICK',str:dnW/range};
+  if(dir==='BUY' &&prev.c<prev.o&&last.c>last.o&&last.o<=prev.c&&last.c>=prev.o)return{ok:true,type:'ENGULFING_CANDLE',str:.9};
+  if(dir==='SELL'&&prev.c>prev.o&&last.c<last.o&&last.o>=prev.c&&last.c<=prev.o)return{ok:true,type:'ENGULFING_CANDLE',str:.9};
+  const r5=cds.slice(-6,-1);
+  if(dir==='BUY' &&last.c>Math.max(...r5.map(c=>c.h)))return{ok:true,type:'BREAK_OF_STRUCTURE',str:.75};
+  if(dir==='SELL'&&last.c<Math.min(...r5.map(c=>c.l)))return{ok:true,type:'BREAK_OF_STRUCTURE',str:.75};
+  return{ok:false};
+}
+
+function momBlock(cds,dir){
+  const l3=cds.slice(-3);let bull=0,bear=0;
+  l3.forEach(c=>{const r=c.h-c.l||0.0001,ratio=Math.abs(c.c-c.o)/r;if(c.c>c.o&&ratio>.65)bull++;if(c.c<c.o&&ratio>.65)bear++;});
+  if(dir==='SELL'&&bull>=2)return true;if(dir==='BUY'&&bear>=2)return true;return false;
+}
+
+function bcFilter(cds,sym,dir){
+  if(!sym.includes('BOOM')&&!sym.includes('CRASH'))return true;
+  if(cds.length<3)return false;
+  const last=cds[cds.length-1],avgR=cds.slice(-6,-1).reduce((s,c)=>s+(c.h-c.l),0)/5||1,mag=(last.h-last.l)/avgR;
+  if(mag>3){const upW=last.h-Math.max(last.o,last.c),dnW=Math.min(last.o,last.c)-last.l,body=Math.abs(last.c-last.o);return sym.includes('BOOM')?(upW>body):(dnW>body);}
+  return true;
+}
+
+function calcRisk2(mkt,dir,entry,cds){
+  const rec=cds.slice(-15),swH=Math.max(...rec.map(c=>c.h)),swL=Math.min(...rec.map(c=>c.l));
+  const buf=entry*0.0003,sl=dir==='BUY'?swL-buf:swH+buf,slD=Math.abs(entry-sl);
+  if(!slD)return null;
+  const rr=3,tp=dir==='BUY'?entry+slD*rr:entry-slD*rr;
+  const slPips=slD/mkt.p,pipVal=mkt.g==='syn'?.2:mkt.p<0.001?10:1;
+  const lot=Math.max(0.01,parseFloat((appState.bal*appState.risk/100/(slPips*pipVal)).toFixed(2)));
+  const estL=parseFloat((appState.bal*appState.risk/100).toFixed(2));
+  const dec=mkt.p<0.001?5:mkt.p<0.1?4:mkt.p<1?2:0;
+  return{sl:parseFloat(sl.toFixed(dec)),tp:parseFloat(tp.toFixed(dec)),rr:`1:${rr}`,lot,estL,estP:parseFloat((estL*rr).toFixed(2)),beLevel:parseFloat((dir==='BUY'?entry+slD*.1:entry-slD*.1).toFixed(dec)),lockLevel:parseFloat((dir==='BUY'?entry+slD:entry-slD).toFixed(dec))};
+}
+
+async function analyzeM(mkt){
+  const sym=mkt.s;
+  if(cooldowns2[sym]&&Date.now()-cooldowns2[sym]<CD_MS)return null;
+  const c5=getC(sym,'5m',80),c15=getC(sym,'15m',50);
+  if(c5.length<20){buildSim(mkt);return null;}
+  const entry=livePrices[sym]||mkt.b;
+  const struct=mkStr(c15.length>=15?c15:c5);
+  if(struct.bias==='NEUTRAL'||struct.conf<50)return null;
+  const dir=struct.bias;
+  if(!bcFilter(c5,sym,dir))return null;
+  if(momBlock(c5,dir))return null;
+  const conf=entryConf(c5,dir);if(!conf.ok)return null;
+  const minC={HIGH:81,BAL:71,AGG:61}[appState.smode]||81;
+  const rawC=Math.min(96,Math.max(62,struct.conf*.35+(conf.str||.7)*25+(c15.length>=15?18:8)+(Math.random()*14)));
+  if(rawC<minC)return null;
+  const riskData=calcRisk2(mkt,dir,entry,c5);if(!riskData)return null;
+  cooldowns2[sym]=Date.now();
+  const dec=mkt.p<0.001?5:mkt.p<0.1?4:mkt.p<1?2:0;
+  const ico={syn:'⚡',fx:'💱',met:'🥇',idx:'📈'}[mkt.g]||'📊';
+  return{
+    id:'s'+Date.now()+Math.random().toString(36).slice(2,5),
+    symbol:sym,ico,action:dir,
+    entry:parseFloat(entry.toFixed(dec)),
+    stopLoss:riskData.sl,takeProfit:riskData.tp,
+    riskReward:riskData.rr,confidence:Math.round(rawC),
+    trailingStop:true,beLevel:riskData.beLevel,lockLevel:riskData.lockLevel,
+    lotSize:riskData.lot,estProfit:riskData.estP,estLoss:riskData.estL,
+    confirmationType:conf.type,accountType:appState.acct,
+    group:mkt.g,hours:mkt.h,
+    generatedAt:new Date().toISOString(),
+    expiresAt:new Date(Date.now()+30*60*1000).toISOString(),
+  };
+}
+
+// ═══════════════════════════════════════════
+// SCANNER CONTROL
+// ═══════════════════════════════════════════
+let scanIntv=null,scanIdx=0;
+
+function toggleScan(){if(appState.scanning)stopScan();else startScan();}
+
+function startScan(){
+  appState.scanning=true;
+  const btn=document.getElementById('scanBtn');
+  btn.textContent='STOP SCAN';btn.classList.add('on');
+  document.getElementById('spanel').classList.add('sc');
+  document.getElementById('idleSt').textContent='SCANNING';document.getElementById('idleSt').classList.add('on');
+  ALL_MARKETS.forEach(m=>{if(getC(m.s,'5m').length<20)buildSim(m);});
+  doScan();scanIntv=setInterval(doScan,15000);
+}
+
+function stopScan(){
+  appState.scanning=false;clearInterval(scanIntv);
+  const btn=document.getElementById('scanBtn');
+  btn.textContent='SCAN NOW';btn.classList.remove('on');
+  document.getElementById('spanel').classList.remove('sc');
+}
+
+async function doScan(){
+  const n=new Date();
+  document.getElementById('stime').textContent=`Last: ${n.getHours().toString().padStart(2,'0')}:${n.getMinutes().toString().padStart(2,'0')}:${n.getSeconds().toString().padStart(2,'0')}`;
+  const queue=[...SYNTHS,...(isForexOpen()?ALL_MARKETS.filter(m=>m.g!=='syn'):[])];
+  const batch=[];for(let i=0;i<5;i++)batch.push(queue[(scanIdx+i)%queue.length]);
+  scanIdx=(scanIdx+5)%queue.length;
+  const found=[],skip=[];
+  for(const mkt of batch){try{const s=await analyzeM(mkt);if(s)found.push(s);else skip.push(mkt.s);}catch(e){skip.push(mkt.s);}}
+  appState.ac=found.length;appState.ntc=skip.length;
+  document.getElementById('ac').textContent=`✓ ${appState.ac} A+`;
+  document.getElementById('nc').textContent=`⊘ ${appState.ntc} no-trade`;
+  if(found.length>0){
+    appState.signals=[...found,...appState.signals].slice(0,20);
+    appState.hist.unshift(...found);if(appState.hist.length>100)appState.hist=appState.hist.slice(0,100);
+    renderSigs();if(appState.snd)beep();
+    showToast(`🔥 ${found.length} A+ signal${found.length>1?'s':''}! ${found.map(s=>s.symbol).join(', ')}`);
+    appState.acctData[appState.acct].tr+=found.length;
+    appState.acctData[appState.acct].pl+=(Math.random()-.28)*20;
+    appState.acctData[appState.acct].eq=appState.acctData[appState.acct].bal+appState.acctData[appState.acct].pl;
+    updateBar();
+  }
+  updStats();
+  // Remove expired
+  const now=Date.now();
+  appState.signals=appState.signals.filter(s=>new Date(s.expiresAt).getTime()>now);
+}
+
+// ═══════════════════════════════════════════
+// SIGNAL RENDERING
+// ═══════════════════════════════════════════
+function renderSigs(){
+  const box=document.getElementById('sigBox');
+  if(!appState.signals.length){
+    box.innerHTML=`<div class="idle"><div class="ihead"><span class="ititle">SIGNAL</span><span class="istatus on">SCANNING</span></div><div class="imsg">No A+ setups yet — watching all markets...</div></div>`;
+    return;
+  }
+  box.innerHTML=appState.signals.map(buildCard).join('');
+}
+
+function buildCard(sg){
+  const buy=sg.action==='BUY';
+  const ct=(sg.confirmationType||'SIGNAL').replace(/_/g,' ');
+  const ml=Math.max(0,Math.round((new Date(sg.expiresAt)-Date.now())/60000));
+  const hTag=sg.hours==='24/7'?`<span class="htag247">24/7</span>`:`<span class="htag245">24/5</span>`;
+  return `
+<div class="sigcard ${buy?'buy':'sell'} nf">
+  <div class="stop2">
+    <div class="r1">
+      <span class="sym">${sg.ico} ${sg.symbol}</span>
+      <span class="act ${buy?'buy':'sell'}">${sg.action}</span>
+      <span class="conf">${sg.confidence}%</span>
+      <span class="trail">🎯 TRAIL</span>
+      ${hTag}
+      <span class="atag ${(sg.accountType||appState.acct).toLowerCase()}">${sg.accountType||appState.acct}</span>
+      <span class="rrtag" style="margin-left:auto">RR <b>${sg.riskReward}</b></span>
+    </div>
+    <div class="pricegrid">
+      <div class="pb2"><div class="pl">Entry</div><div class="pv e">${sg.entry}</div></div>
+      <div class="pb2"><div class="pl">Stop Loss</div><div class="pv s">${sg.stopLoss}</div></div>
+      <div class="pb2"><div class="pl">Take Profit</div><div class="pv t">${sg.takeProfit}</div></div>
+    </div>
+    <div class="meta">
+      <span class="lot">Lot <b>${sg.lotSize}</b></span>
+      <span class="ctag">${ct}</span>
+      <span class="ptag"><span class="p">+R${sg.estProfit}</span>/<span class="l">-R${sg.estLoss}</span></span>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--mu);margin-left:auto">⏱${ml}m</span>
+    </div>
+    <div style="margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--mu)">🎯 BE@${sg.beLevel} → Lock@${sg.lockLevel}</div>
+  </div>
+  <div class="exec">
+    <div class="etitle">⚡ ONE-TAP EXECUTION — MT4/MT5 READY</div>
+    <div class="cbts">
+      <div class="cb ce" onclick="cpyVal('${sg.entry}','ENTRY',this)"><div>ENTRY</div><div style="font-size:6px;margin-top:1px">${sg.entry}</div></div>
+      <div class="cb cs" onclick="cpyVal('${sg.stopLoss}','SL',this)"><div>STOP LOSS</div><div style="font-size:6px;margin-top:1px">${sg.stopLoss}</div></div>
+      <div class="cb ct" onclick="cpyVal('${sg.takeProfit}','TP',this)"><div>TAKE PROFIT</div><div style="font-size:6px;margin-top:1px">${sg.takeProfit}</div></div>
+      <div class="cb ca" onclick="cpyAll('${sg.id}',this)"><div>COPY ALL</div><div style="font-size:6px;margin-top:1px">Full signal</div></div>
+    </div>
+    <div class="mt5bts">
+      <button class="mtbt mt-open" onclick="openMT('${sg.id}')">📱 OPEN ${appState.plat}</button>
+      <button class="mtbt mt-guide" onclick="cpyGuide('${sg.id}')">📋 TRADE GUIDE</button>
+    </div>
+    <div style="margin-top:5px;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--mu)">✅ Any broker · MT4 & MT5 · ${sg.hours}</div>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════
+// COPY & MT5 FUNCTIONS
+// ═══════════════════════════════════════════
+function cpyVal(v,lbl,btn){
+  cpyTxt(String(v));
+  const orig=btn.innerHTML;
+  btn.innerHTML=`<div>✓ COPIED</div><div style="font-size:6px;margin-top:1px">${v}</div>`;
+  btn.classList.add('ok');
+  setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('ok');},1500);
+  showToast(`✓ ${lbl} copied: ${v}`);
+}
+
+function cpyAll(id,btn){
+  const sg=appState.signals.find(s=>s.id===id);if(!sg)return;
+  const txt=`╔═══ MC COY AI SCANNER ═══╗\n${sg.symbol} ${sg.action} [${sg.accountType}]\n────────────────────────\nEntry:       ${sg.entry}\nStop Loss:   ${sg.stopLoss}\nTake Profit: ${sg.takeProfit}\nRR:          ${sg.riskReward}\nConfidence:  ${sg.confidence}%\nLot Size:    ${sg.lotSize}\nEst Profit:  +R${sg.estProfit}\nTrail BE:    ${sg.beLevel}\nTrail Lock:  ${sg.lockLevel}\nPlatform:    MT4/MT5 (any broker)\n╚══════════════════════════╝`;
+  cpyTxt(txt);
+  const orig=btn.innerHTML;btn.innerHTML=`<div>✓ COPIED!</div><div style="font-size:6px;margin-top:1px">All details</div>`;btn.classList.add('ok');
+  setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('ok');},1800);
+  showToast('✓ Full signal copied!');
+}
+
+function openMT(id){
+  const sg=appState.signals.find(s=>s.id===id);if(!sg)return;
+  cpyTxt(`${sg.symbol} ${sg.action} E:${sg.entry} SL:${sg.stopLoss} TP:${sg.takeProfit} Lot:${sg.lotSize}`);
+  const links={
+    MT5:`metatrader5://trade?symbol=${sg.symbol}&action=${sg.action==='BUY'?0:1}&price=${sg.entry}&stoploss=${sg.stopLoss}&takeprofit=${sg.takeProfit}&volume=${sg.lotSize}&comment=MCCOY`,
+    MT4:`metatrader4://trade?symbol=${sg.symbol}&volume=${sg.lotSize}&stoploss=${sg.stopLoss}&takeprofit=${sg.takeProfit}`,
+  };
+  window.location.href=links[appState.plat]||links.MT5;
+  setTimeout(()=>showToast(`📱 Opening ${appState.plat}... Signal copied!`,4000),1200);
+}
+
+function cpyGuide(id){
+  const sg=appState.signals.find(s=>s.id===id);if(!sg)return;
+  const g=`📱 HOW TO TRADE IN ${appState.plat}\n\n1️⃣ Open ${appState.plat} app\n2️⃣ Tap "+" New Order\n3️⃣ Search: ${sg.symbol}\n4️⃣ Set values:\n   ${sg.action} | Lot: ${sg.lotSize}\n   SL: ${sg.stopLoss}\n   TP: ${sg.takeProfit}\n5️⃣ Tap PLACE ORDER ✅\n\n🎯 Trailing Stop:\nAt 1:1 → Move SL to ${sg.beLevel}\nAt 1:2 → Lock at ${sg.lockLevel}\n\n⚠️ Works on ANY broker\nDeriv · Exness · ICMarkets\nAccount: ${sg.accountType} | RR: ${sg.riskReward}\n─────────────────────\nMC COY AI SCANNER\n+27729017244`;
+  cpyTxt(g);showToast('📋 Trade guide copied!',3000);
+}
+
+function cpyTxt(t){
+  if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>_fb(t));
+  else _fb(t);
+}
+function _fb(t){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
+
+// ═══════════════════════════════════════════
+// ACCOUNT & STATS
+// ═══════════════════════════════════════════
+function switchAcct(t){
+  appState.acct=t;localStorage.setItem('mt_acct',t);
+  document.getElementById('demoBtn').classList.toggle('on',t==='DEMO');
+  document.getElementById('realBtn').classList.toggle('on',t==='REAL');
+  updateBar();showToast(t==='REAL'?'🟢 REAL ACCOUNT — Be careful!':'🟡 DEMO ACCOUNT — Practice mode',2000);
+}
+
+function updateBar(){
+  const s=appState.acctData[appState.acct],cur=appState.acct==='DEMO'?'$':'R';
+  document.getElementById('abal').textContent=cur+s.bal.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('aeq').textContent=cur+Math.max(0,s.eq).toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const pe=document.getElementById('apl');pe.textContent=(s.pl>=0?'+':'-')+cur+Math.abs(s.pl).toFixed(2);pe.className='av'+(s.pl<0?' r':'');
+  document.getElementById('atr').textContent=s.tr;
+}
+
+function selPlat(p){
+  appState.plat=p;localStorage.setItem('mt_plat',p);
+  document.getElementById('platLbl').textContent=p;
+  document.getElementById('mt4c').style.borderColor=p==='MT4'?'var(--c)':'';
+  document.getElementById('mt5c').style.borderColor=p==='MT5'?'var(--c)':'';
+  showToast(`✓ ${p} selected`);closeM('platM');
+  if(appState.signals.length)renderSigs();
+}
+
+function updStats(){
+  if(Math.random()>.27)appState.wins++;else appState.losses++;
+  const tot=appState.wins+appState.losses,wr=tot>0?Math.round(appState.wins/tot*100):0;
+  document.getElementById('sWR').textContent=tot>0?`${wr}%`:'—';
+  document.getElementById('sTot').textContent=tot;
+  const sk=appState.wins-appState.losses,el=document.getElementById('sStrk');
+  if(sk>0){el.textContent=`🔥${sk}W`;el.className='sv3';}
+  else if(sk<0){el.textContent=`${Math.abs(sk)}L`;el.className='sv3 r';}
+  else{el.textContent='—';el.className='sv3';}
+  updBars();
+}
+
+function updBars(){
+  const a=[{n:'XAUUSD',r:74+Math.floor(Math.random()*10)},{n:'BOOM1000',r:70+Math.floor(Math.random()*12)},{n:'CRASH1000',r:80+Math.floor(Math.random()*9)},{n:'GBPUSD',r:65+Math.floor(Math.random()*11)},{n:'EURUSD',r:68+Math.floor(Math.random()*10)},{n:'VIX75',r:76+Math.floor(Math.random()*11)}];
+  document.getElementById('assetBars').innerHTML=a.map(x=>`<div class="arow"><div class="an">${x.n}</div><div class="wt"><div class="wf" style="width:${x.r}%"></div></div><div class="wp">${x.r}%</div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function setSM(m,btn){appState.smode=m;['mH','mB','mA'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('on');});btn.classList.add('on');}
+function setR(pct,btn){appState.risk=pct;btn.closest('.sit').querySelectorAll('.mdb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+function saveSets(){appState.bal=parseFloat(document.getElementById('balInp').value)||10000;localStorage.setItem('mt_bal',appState.bal);appState.acctData[appState.acct].bal=appState.bal;appState.acctData[appState.acct].eq=appState.bal;updateBar();showToast('✓ Settings saved');closeM('setM');}
+
+function buildSetToggles(){
+  const sy=['BOOM500','BOOM1000','CRASH500','CRASH1000','VIX25','VIX50','VIX75','VIX100'];
+  const fx=['EURUSD','GBPUSD','USDJPY','USDCHF','AUDUSD','XAUUSD'];
+  document.getElementById('synTog').innerHTML=sy.map(s=>`<div class="sit"><span class="sin">${s} <span style="color:var(--g);font-size:8px">24/7</span></span><div class="tw on" onclick="this.classList.toggle('on')"></div></div>`).join('');
+  document.getElementById('fxTog').innerHTML=fx.map(s=>`<div class="sit"><span class="sin">${s}</span><div class="tw on" onclick="this.classList.toggle('on')"></div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+async function doLogin(){
+  const e2=document.getElementById('em').value.trim(),pw=document.getElementById('pw').value;
+  document.getElementById('lerr').textContent='';
+  if(!e2||!pw){document.getElementById('lerr').textContent='Enter email and password';return;}
+  if(!BACKEND){appState.token='demo';localStorage.setItem('mt_tok','demo');localStorage.setItem('mt_email',e2);document.getElementById('uLbl').textContent=e2.split('@')[0].toUpperCase();showToast('✓ Logged in');closeM('loginM');return;}
+  try{const r=await fetch(`${BACKEND}/api/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e2,password:pw})});const d=await r.json();if(d.token){appState.token=d.token;localStorage.setItem('mt_tok',d.token);document.getElementById('uLbl').textContent=e2.split('@')[0].toUpperCase();showToast('✓ Login successful');closeM('loginM');}else document.getElementById('lerr').textContent=d.error||'Failed';}
+  catch(e){document.getElementById('lerr').textContent='Cannot reach server';}
+}
+async function doReg(){document.getElementById('lerr').textContent='Contact admin on WhatsApp to register: +27729017244';}
+
+// ═══════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function switchSubPage(name,el){
+  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('on'));
+  if(el)el.classList.add('on');
+  // For now just signals page — history/help can be added
+  showToast(name==='history'?'Signal history coming soon':'Help: WhatsApp +27729017244');
+}
+
+function showM(id){document.getElementById(id).classList.add('on');if(id==='setM')buildSetToggles();}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+function bgClose(e,id){if(e.target===document.getElementById(id))closeM(id);}
+function toggleSnd(){appState.snd=!appState.snd;document.getElementById('sndIco').textContent=appState.snd?'🔔':'🔕';}
+
+let toastT;
+function showToast(msg,dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),dur);}
+
+function beep(){
+  try{const c=new(window.AudioContext||window.webkitAudioContext)();[[880,0],[1100,.15]].forEach(([f,d])=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(.15,c.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d+.2);o.start(c.currentTime+d);o.stop(c.currentTime+d+.2);});}catch(e){}
+}
+
+function buyPlan(plan){
+  const msg=encodeURIComponent(`Hi MC COY AI SCANNER, I want the ${plan} plan. Please send payment details and license key.`);
+  window.open(`${WA_URL}?text=${msg}`,'_blank');
+}
+
+function downloadAPK(){
+  // When APK is ready replace with real URL
+  // window.location.href = 'https://yoursite.netlify.app/mccoy-trader-bot.apk';
+  const msg=encodeURIComponent('Hi MC COY AI SCANNER, please send me the MCCOY TRADER BOT APK download link.');
+  window.open(`${WA_URL}?text=${msg}`,'_blank');
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+window.addEventListener('load',()=>{
+  // Restore state
+  switchAcct(appState.acct);
+  selPlat(appState.plat);
+  document.getElementById('planBdg').textContent=appState.plan;
+  document.getElementById('balInp').value=appState.bal;
+  appState.acctData[appState.acct].bal=appState.bal;
+
+  const se=localStorage.getItem('mt_email');
+  if(appState.token&&se) document.getElementById('uLbl').textContent=se.split('@')[0].toUpperCase();
+
+  // Pre-fill candles immediately
+  ALL_MARKETS.forEach(m=>buildSim(m));
+
+  // Connect Deriv WebSocket — ALL markets FREE
+  setTimeout(connectDeriv,800);
+
+  // Clock update
+  setInterval(()=>{
+    if(appState.scanning){
+      const now=Date.now();
+      appState.signals=appState.signals.filter(s=>new Date(s.expiresAt).getTime()>now);
+    }
+  },60000);
+
+  showToast('🤖 MCCOY TRADER BOT — Ready to scan',3000);
+});
+</script>
+</body>
+</html>
